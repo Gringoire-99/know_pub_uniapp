@@ -1,0 +1,316 @@
+@import "constant";
+
+@mixin clickable($color:$blue,$lighten:20%) {
+  cursor: pointer;
+  color: $color;
+  &:is(:hover) {
+    color: lighten($color, $lighten);
+  }
+}
+
+@mixin clickEffect($color:$blue,$scale:0.99,$bg:none) {
+  @include clickable($color);
+  &:hover {
+    background: $bg;
+  }
+  &:active {
+    transform: scale($scale);
+    border-color: lighten($color, 10%);
+  }
+  &:not(:active) {
+    transform: scale(1);
+  }
+}
+
+@mixin align($d:flex,$fw:nowrap,$jc:center,$ai:center,$fd:row,$grow:0,$basis:10px) {
+  display: $d;
+  justify-content: $jc;
+  align-items: $ai;
+  @if ($d == flex) {
+    flex-wrap: $fw;
+    flex-direction: $fd;
+  }
+  @if ($grow!=0) {
+    & > * {
+      flex-grow: $grow;
+      flex-basis: $basis;
+    }
+  }
+}
+
+
+@mixin textButton($color:$blue,$fs:$fs-medium) {
+  border: none;
+  background: none;
+  color: $color;
+  font-size: $fs;
+  @include clickable($color);
+}
+
+@mixin clearDefault() {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: inherit;
+  &:is(:active,:hover,:focus) {
+    color: inherit;
+  }
+}
+
+@mixin hoverFloat($duration:0.1s,$y:-3px) {
+  &:hover {
+    transform: translateY($y);
+  }
+  &:not(:hover) {
+    transition-duration: $duration+0.2s;
+  }
+  & {
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition-duration: $duration;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+  }
+}
+
+@mixin hoverUnderLine($position:left,$duration:0.3s,$color:$blue) {
+  $left: 0;
+  $right: 0;
+  display: inline-block;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    background: $color;
+    height: 4px;
+    transition-property: right, left;
+    transition-duration: $duration;
+    transition-timing-function: ease-out;
+  }
+  @if ($position == left) {
+    $left: 0%;
+    $right: 100%;
+  } @else if ($position == center) {
+    $left: 51%;
+    $right: 51%;
+  } @else if ($position == right) {
+    $left: 100%;
+    $right: 0%;
+  }
+  &:before {
+    left: $left;
+    right: $right;
+  }
+  &:hover:before, &:focus:before, &:active:before {
+    right: 0;
+    left: 0;
+  }
+}
+
+@mixin animated($duration:1s) {
+  animation-duration: $duration;
+  animation-fill-mode: both;
+}
+
+@mixin a-fadeIn($reverse:false,$duration:1s,$move:(0,0,0),$name:v) {
+  @include animated($duration);
+
+  @if ($reverse) {
+    animation-direction: reverse;
+  }
+  //防止keyframes重名
+  $name: fade+$reverse+$name;
+  animation-name: $name;
+
+  @keyframes #{$name} {
+    from {
+      opacity: 0;
+      transform: translate3d($move);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+
+@mixin fade($name:v,$duration:1s,$move:(0,0,0),$reverse:true) {
+  .#{$name} {
+    &-enter-active {
+      @include a-fadeIn(false, $duration, $move, $name);
+    }
+
+    @if ($reverse) {
+      &-leave-active {
+        @include a-fadeIn(true, $duration, $move, $name);
+      }
+    }
+  }
+}
+
+
+@mixin zoomIn($reverse:false,$duration:1s,$scale:(0.3,0.3,0.3),$move:(0,0,0),$name:v) {
+  @include animated($duration);
+
+  @if ($reverse) {
+    animation-direction: reverse;
+  }
+  $name: zoom+$reverse+$name;
+  animation-name: $name;
+
+  @keyframes #{$name} {
+    from {
+      opacity: 0;
+      transform: scale3d($scale) translate3d($move);
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+  }
+}
+
+@mixin zoom($name:v,$duration:1s,$scale:(0.3,0.3,0.3),$move:(0,0,0),$reverse:true) {
+  .#{$name} {
+    &-enter-active {
+      @include zoomIn(false, $duration, $scale, $move, $name);
+    }
+
+    @if ($reverse) {
+      &-leave-active {
+        @include zoomIn(true, $duration, $scale, $move, $name);
+      }
+    }
+
+  }
+}
+
+@mixin gridCollapse($name:isShow,$direction:row,$duration:0.3s) {
+  display: grid;
+  transition: grid $duration, opacity $duration;
+  opacity: 0;
+  & > * {
+    min-height: 0;
+    overflow: hidden;
+  }
+  @if ($direction==row) {
+    grid-template-rows: 0fr;
+    &.#{$name} {
+      opacity: 1 !important;
+      grid-template-rows: 1fr !important;
+    }
+  } @else {
+    grid-template-columns: 0fr;
+    &.#{$name} {
+      opacity: 1 !important;
+      grid-template-columns: 1fr !important;
+    }
+  }
+}
+
+%card-border {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border: 1px solid $gray;
+  border-radius: 5px;
+}
+
+%card-border-light {
+  @extend %card-border;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+
+}
+
+%card-border-bottom {
+  padding-bottom: 1em;
+  border-bottom: 1px solid $white-gray;
+}
+
+@mixin image($size:m,$br:r) {
+  $image-size: $uni-img-size-base;
+  @if ($size == s) {
+    $image-size: $uni-img-size-sm
+  } @else if ($size == lg) {
+    $image-size: $uni-img-size-lg
+  } @else if ($size == m) {
+    $image-size: $uni-img-size-base;
+  } @else {
+    $image-size: $size
+  }
+  @if ($br == r) {
+    border-radius: 50%;
+  } @else {
+    border-radius: $br;
+  }
+  width: $image-size;
+  height: $image-size;
+
+}
+
+%input-base {
+  padding: 15rpx;
+  border: 1px solid $white-gray;
+  border-radius: 15rpx;
+  min-height: 100rpx;
+  font-size: $uni-font-size-sm;
+}
+
+%button-base {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $uni-font-size-base;
+  border: 1rpx solid $white;
+  border-radius: $uni-border-radius-base;
+  padding: 10rpx;
+}
+
+%button-primary {
+  @extend %button-base;
+  color: $blue;
+  background: $whiteBlue;
+}
+
+%button-deep-blue {
+  @extend %button-base;
+  color: $white;
+  background: $deep-blue;
+}
+
+%button-small {
+  border-radius: 10rpx;
+  max-height: 50rpx;
+  max-width: 150rpx;
+  font-size: $uni-font-size-sm;
+
+}
+
+%fixed-header {
+  display: flex;
+  position: fixed;
+  background: $white;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 30rpx 30rpx;
+  z-index: 100;
+
+}
+
+%header-padding {
+  padding: 130rpx 30rpx 30rpx 30rpx;
+}
