@@ -11,7 +11,9 @@
             <view class="body-ul">
                 <text>用户</text>
                 <view class="body-ul-li" v-for="user in users" :key="user.id">
-                    <image class="body-ul-li-avatar" :src="user.avatar"></image>
+                    <navigator url="/pages/post-card/post-card">
+                        <image class="body-ul-li-avatar" :src="user.avatar"></image>
+                    </navigator>
                     <text class="body-ul-li-nickname">{{ user.nickname }}</text>
                     <button class="body-ul-li-operation" :class="{friend:user.isFriend}">
                         {{ user.isFriend ? '发消息' : '加好友 ' }}

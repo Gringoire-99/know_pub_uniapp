@@ -1,9 +1,7 @@
 <template>
     <view class="message-root">
         <view class="avatar">
-            <navigator url="/pages/post-card/post-card">
                 <image :src="message.avatar"></image>
-            </navigator>
             <view class="avatar-badge" v-if="message.messageCount>0">{{ message.messageCount }}</view>
         </view>
         <view class="content">
@@ -37,7 +35,7 @@ export default {
 
 <style scoped lang="scss">
 .message-root {
-    @include align($ai: start);
+    @include align($ai: flex-start);
     gap: 20rpx;
 
     .avatar {

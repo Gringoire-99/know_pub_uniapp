@@ -127,6 +127,7 @@ export default {
 
     .header {
         @extend %fixed-header;
+        border-bottom: 1px solid $white-gray;
 
         &-avatar {
             @include align($jc: start);

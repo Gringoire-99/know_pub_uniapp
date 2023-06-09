@@ -9,7 +9,9 @@
             <text class="body-desc">{{ userInfo.description }}</text>
         </view>
         <view class="footer">
-            <button>加为好友</button>
+            <navigator url="/pages/add-friend/add-friend">
+                <button>加为好友</button>
+            </navigator>
         </view>
 
     </view>
@@ -82,6 +84,10 @@ export default {
         button {
             @extend %button-deep-blue;
             border: none;
+
+            &:active {
+                transform: scale(0.99);
+            }
         }
     }
 }
