@@ -13,7 +13,8 @@
             </view>
         </view>
         <view class="body">
-            <view class="body-message" v-for="(message,index) in messages" :key="index">
+            <view class="body-message" v-for="(message,index) in messages" :key="index"
+                  @click="toMessageDetail(message)">
                 <message :message="message"></message>
             </view>
         </view>
@@ -33,56 +34,70 @@ export default {
                     name: '好友请求',
                     message: '你有2条好友请求',
                     time: '9.12',
-                    messageCount: 2
+                    messageCount: 2,
+                    url: '/pages/friend-request/friend-request'
                 },
                 {
                     avatar: 'http://dummyimage.com/100x100',
                     name: '发信人',
                     message: '消息内容22222222222222222',
                     time: '9.12',
-                    messageCount: 2
+                    messageCount: 2,
+                    url: '',
                 },
                 {
                     avatar: 'http://dummyimage.com/100x100',
                     name: '发信人',
                     message: '消息内容',
                     time: '9.12',
-                    messageCount: 0
+                    messageCount: 0,
+                    url: ''
+
                 },
                 {
                     avatar: 'http://dummyimage.com/100x100',
                     name: '发信人',
                     message: '消息内容',
                     time: '9.12',
-                    messageCount: 1
+                    messageCount: 1,
+                    url: ''
+
                 },
                 {
                     avatar: 'http://dummyimage.com/100x100',
                     name: '发信人',
                     message: '消息内容',
                     time: '9.12',
-                    messageCount: 0
+                    messageCount: 0,
+                    url: ''
+
                 },
                 {
                     avatar: 'http://dummyimage.com/100x100',
                     name: '发信人',
                     message: '消息内容',
                     time: '9.12',
-                    messageCount: 2
+                    messageCount: 2,
+                    url: ''
+
                 },
                 {
                     avatar: 'http://dummyimage.com/100x100',
                     name: '发信人',
                     message: '消息内容',
                     time: '9.12',
-                    messageCount: 0
+                    messageCount: 0,
+                    url: ''
+
                 },
                 {
                     avatar: 'http://dummyimage.com/100x100',
                     name: '发信人',
                     message: '消息内容',
                     time: '9.12',
-                    messageCount: 0
+                    messageCount: 0,
+                    url: ''
+
                 },
             ]
         };
@@ -94,6 +109,13 @@ export default {
             })
         },
         toAdd() {
+        },
+        toMessageDetail(message) {
+            if (message.url && message !== '') {
+                uni.navigateTo({
+                    url: message.url
+                })
+            }
         }
     },
     mounted() {

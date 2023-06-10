@@ -39,13 +39,19 @@
     {
       "path": "pages/post-card/post-card",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "用户名片"
       }
     },
     {
       "path": "pages/add-friend/add-friend",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "发送好友请求"
+      }
+    },
+    {
+      "path": "pages/friend-request/friend-request",
+      "style": {
+        "navigationBarTitleText": "我的好友请求"
       }
     }
   ],

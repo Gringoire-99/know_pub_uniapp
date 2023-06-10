@@ -129,8 +129,6 @@ export default {
                     &.friend {
                         @extend %button-deep-blue;
                         @extend %button-small;
-
-
                     }
                 }
             }

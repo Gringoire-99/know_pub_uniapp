@@ -291,6 +291,12 @@
   background: $deep-blue;
 }
 
+%button-danger {
+  @extend %button-base;
+  color: $danger;
+  background: $danger-bg;
+}
+
 %button-small {
   border-radius: 10rpx;
   max-height: 50rpx;
