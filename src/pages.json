@@ -9,13 +9,13 @@
     {
       "path": "pages/user-home/user-home",
       "style": {
-        "navigationBarTitleText": "user-home"
+        "navigationBarTitleText": "我的主要"
       }
     },
     {
       "path": "pages/contact/contact",
       "style": {
-        "navigationBarTitleText": "contact"
+        "navigationBarTitleText": "联系人"
       }
     },
     {
@@ -52,6 +52,12 @@
       "path": "pages/friend-request/friend-request",
       "style": {
         "navigationBarTitleText": "我的好友请求"
+      }
+    },
+    {
+      "path": "pages/chat/chat",
+      "style": {
+        "navigationBarTitleText": "聊天"
       }
     }
   ],

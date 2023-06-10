@@ -115,7 +115,12 @@ export default {
                 uni.navigateTo({
                     url: message.url
                 })
+            } else {
+                uni.navigateTo({
+                    url: '/pages/chat/chat'
+                })
             }
+
         }
     },
     mounted() {
